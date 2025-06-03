@@ -1,56 +1,54 @@
-🔐 Secure VPS Setup: SSH & WireGuard VPN Configuration
-This project provides a step-by-step setup for securing a Linux-based VPS (Debian/Ubuntu) using OpenSSH and WireGuard VPN. The goal is to enable secure remote access and private encrypted tunneling for administrative tasks or internal traffic routing.
+Secure VPS Setup: SSH & WireGuard VPN Configuration
+Proyek ini menyediakan langkah-langkah untuk mengamankan VPS Linux (Debian/Ubuntu) dengan mengatur OpenSSH dan WireGuard VPN. Tujuannya adalah untuk menyediakan akses remote yang aman dan tunneling terenkripsi untuk keperluan administratif maupun lalu lintas internal.
 
-✅ Features
-Install and configure OpenSSH Server for secure remote login
+Fitur Utama
+Instalasi dan konfigurasi OpenSSH Server
 
-Setup and manage WireGuard VPN (wg0 interface)
+Instalasi dan konfigurasi WireGuard VPN (interface wg0)
 
-Enable IP forwarding and configure UFW firewall rules
+Mengaktifkan IP forwarding dan konfigurasi firewall UFW
 
-Handle systemd-related service issues (e.g. wg-quick@wg0 already exists)
+Disediakan skrip otomatis untuk sisi server dan klien
 
-Scripts and commands included to persist configuration across reboots
+Perbaikan error systemd: "wg-quick@wg0 already exists"
 
-Focus on security, reproducibility, and minimalism
+Panduan setup klien Android disertakan
 
-Connect from Android using WireGuard app
+Fokus pada keamanan, kemudahan replikasi, dan kesederhanaan
 
-📱 Connect from Android
-Install the WireGuard app from Google Play.
+File yang Disertakan
+setup_ssh_vps.sh → Skrip untuk setup SSH dan WireGuard di VPS (server side)
 
-On the VPS, generate a client config (e.g. android.conf) with:
+setup_wg_client.sh → Skrip untuk generate konfigurasi klien WireGuard
 
-ini
-Copy
-Edit
+wg0.conf → Contoh konfigurasi WireGuard server (dibuat otomatis)
+
+README.txt → Panduan lengkap instalasi dan troubleshooting
+
+Panduan Konfigurasi WireGuard di Android
+Install aplikasi WireGuard dari Google Play Store.
+
+Buka aplikasi, lalu tekan tombol "+" untuk membuat tunnel baru.
+
+Pilih "Create from scratch" atau "Import from file".
+
+Jika membuat manual, gunakan template berikut:
+
 [Interface]
-PrivateKey = <your-android-private-key>
-Address = 10.0.0.2/32
+PrivateKey = <private key klien>
+Address = 10.0.0.2/24
 DNS = 1.1.1.1
 
 [Peer]
-PublicKey = <server-public-key>
-Endpoint = <your-vps-ip>:51820
+PublicKey = <public key server>
+Endpoint = <IP publik VPS>:51820
 AllowedIPs = 0.0.0.0/0, ::/0
 PersistentKeepalive = 25
-Transfer the config to your phone (via QR code or file).
 
-In the app: Add Tunnel → Import from file or scan QR code.
+Ganti nilai <private key klien>, <public key server>, dan <IP publik VPS> sesuai konfigurasi kamu.
 
-Toggle the switch to connect — you're now securely tunneled!
+Simpan dan aktifkan tunnel. Sekarang seluruh koneksi internet kamu akan melewati VPS secara terenkripsi.
 
-📂 Files
-wg0.conf – example server config
-
-android-client.conf – example client config
-
-README.md – full setup guide & troubleshooting
-
-🔧 Requirements
-A VPS (DigitalOcean, Vultr, etc.)
-
-Ubuntu 20.04/22.04 or Debian 10/11
-
-Root or sudo access
+Catatan
+Cocok untuk penggunaan pribadi atau tim kecil yang membutuhkan jaringan privat yang ringan, aman, dan mudah dikonfigurasi.
 
